@@ -50,7 +50,7 @@ The default baud rate is 38400. The `speed` option sets a different baud rate.
 $ sudo vde_plug tap://vdesl vdesl:///dev/ttyAMA0[speed=2000000]
 ```
 
-`vdesl` supports the followin baud rates:
+`vdesl` supports the following baud rates:
 9600, 19200, 38400, 57600, 115200, 230400, 460800, 500000, 576000, 921600, 1000000, 1152000, 1500000, 2000000, 2500000, 3000000, 3500000, 4000000.
 
-High baud rates may not be supported by the uart hardware or could provide an unreliable service due to communication errors. In order to achieve high speeds the cables should be short and properly shielded from electro-magnetic noise. 
+High baud rates may not be supported by the uart hardware or could provide an unreliable service due to communication errors. In order to achieve high speeds the cables should be short and properly shielded against electro-magnetic noise. 
