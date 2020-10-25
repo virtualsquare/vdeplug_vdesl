@@ -41,10 +41,10 @@
 
 #define VDESL_DEFAULT_SPEED B38400
 
-static VDECONN *vde_sl_open(char *given_vde_url, char *descr,int interface_version,
+static VDECONN *vde_sl_open(char *given_vde_url, char *descr, int interface_version,
 		struct vde_open_args *open_args);
-static ssize_t vde_sl_recv(VDECONN *conn,void *buf,size_t len,int flags);
-static ssize_t vde_sl_send(VDECONN *conn,const void *buf,size_t len,int flags);
+static ssize_t vde_sl_recv(VDECONN *conn, void *buf, size_t len, int flags);
+static ssize_t vde_sl_send(VDECONN *conn, const void *buf, size_t len, int flags);
 static int vde_sl_datafd(VDECONN *conn);
 static int vde_sl_ctlfd(VDECONN *conn);
 static int vde_sl_close(VDECONN *conn);
@@ -117,9 +117,12 @@ static speed_t itospeed(int ispeed) {
 	}
 }
 
-static VDECONN *vde_sl_open(char *vde_url, char *descr,int interface_version,
+static VDECONN *vde_sl_open(char *vde_url, char *descr, int interface_version,
 		struct vde_open_args *open_args)
 {
+	(void) descr;
+	(void) interface_version;
+	(void) open_args;
 	struct vde_sl_conn *newconn;
 	struct termios tty;
 	char *speedstr = NULL;
@@ -142,7 +145,7 @@ static VDECONN *vde_sl_open(char *vde_url, char *descr,int interface_version,
 		}
 	}
 
-	if ((newconn=calloc(1,sizeof(struct vde_sl_conn)))==NULL)
+	if ((newconn=calloc(1, sizeof(struct vde_sl_conn)))==NULL)
 	{
 		errno=ENOMEM;
 		goto abort;
@@ -189,14 +192,15 @@ abort:
 	return NULL;
 }
 
-static ssize_t vde_sl_recv(VDECONN *conn,void *buf,size_t len,int flags)
+static ssize_t vde_sl_recv(VDECONN *conn, void *buf, size_t len, int flags)
 {
+	(void) flags;
 	struct vde_sl_conn *vde_conn = (struct vde_sl_conn *)conn;
 	unsigned char header[2];
 	unsigned int pktlen;
 	unsigned int taillen;
 	ssize_t rv;
-	int pos;
+	unsigned int pos;
 	if ((rv = read(vde_conn->fd, header, 2)) <= 0)
 		goto error_or_skip;
 	else if (rv == 1) {
@@ -215,7 +219,7 @@ static ssize_t vde_sl_recv(VDECONN *conn,void *buf,size_t len,int flags)
 		pktlen = len;
 	}
 	for (pos = 0; pos < pktlen; pos += rv) {
-		if ((rv = read(vde_conn->fd, buf + pos, pktlen - pos)) <= 0)
+		if ((rv = read(vde_conn->fd, ((char *) buf) + pos, pktlen - pos)) <= 0)
 			goto error_or_skip;
 	}
 	for (pos = 0; pos < taillen; pos += rv) {
@@ -239,8 +243,9 @@ error_or_skip:
 	}
 }
 
-static ssize_t vde_sl_send(VDECONN *conn,const void *buf,size_t len,int flags)
+static ssize_t vde_sl_send(VDECONN *conn, const void *buf, size_t len, int flags)
 {
+	(void) flags;
 	struct vde_sl_conn *vde_conn = (struct vde_sl_conn *)conn;
 #ifdef SIMULATE_NOISY_LINE
 	if (random() % 10 == 0) {
@@ -251,10 +256,10 @@ static ssize_t vde_sl_send(VDECONN *conn,const void *buf,size_t len,int flags)
 #endif
 	if (len <= VDE_ETHBUFSIZE) {
 		unsigned char header[2];
-		struct iovec iov[2]={{header,2},{(void *)buf,len}};
+		struct iovec iov[2]={{header, 2},{(void *)buf, len}};
 		header[0]=len >> 8;
 		header[1]=len & 0xff;
-		return writev(vde_conn->fd,iov,2);
+		return writev(vde_conn->fd, iov, 2);
 	} else
 		return 0;
 }
@@ -267,13 +272,13 @@ static int vde_sl_datafd(VDECONN *conn)
 
 static int vde_sl_ctlfd(VDECONN *conn)
 {
+	(void) conn;
 	return -1;
 }
 
 static int vde_sl_close(VDECONN *conn)
 {
 	struct vde_sl_conn *vde_conn = (struct vde_sl_conn *)conn;
-	int status;
 	close(vde_conn->fd);
 	free(vde_conn);
 	return 0;
