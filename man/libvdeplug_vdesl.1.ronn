@@ -70,7 +70,7 @@ vdens vdesl:///dev/ttyAMA0
 ```
 
 Run the following command on both hosts to create a virtual interface named `vdesl0` on each end. The two
-interfaces are conencted by a 4Mbaud link.
+interfaces are connected by a 4Mbaud link.
 
 ```
 sudo vde_plug -d tap://vdesl0 vdesl:///dev/ttyAMA0[speed=4000000]

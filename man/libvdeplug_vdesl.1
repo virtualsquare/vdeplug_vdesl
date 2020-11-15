@@ -20,9 +20,9 @@
 .\" Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 .\" MA 02110-1301 USA.
 .\"
-.\" generated with Ronn-NG/v0.9.1
-.\" http://github.com/apjanke/ronn-ng/tree/0.9.1
-.TH "LIBVDEPLUG_VDESL" "1" "June 2020" "VirtualSquare"
+.\" generated with Ronn-NG/v0.10.0
+.\" http://github.com/apjanke/ronn-ng/tree/0.10.0-SNAPSHOT
+.TH "LIBVDEPLUG_VDESL" "1" "November 2020" "VirtualSquare"
 .SH "NAME"
 \fBlibvdeplug_vdesl\fR \- vdesl vdeplug module: ethernet over serial link
 .SH "SYNOPSIS"
@@ -45,12 +45,18 @@ Scenario: two hosts connected by a serial line\. e\.g\.: RS\-232 serial ports co
 In the following we use the device \fB/dev/ttyAMA0\fR, this may be changed to address the actual device (e\.g\. \fB/dev/ttyS0\fR, \fB/dev/ttyS1\fR, \fB/dev/ttyUSB0\fR, \fB/dev/ttyACM0\fR\|\.\|\.\|\.)\. No other processes should be using the serial port (e\.g\. no getty\-login process should be active on it)\.
 .P
 The following command (on both hosts) creates two vde namespaces connected by a virtual point\-to\-point ethernet network\.
+.IP "" 4
+.nf
+vdens vdesl:///dev/ttyAMA0
+.fi
+.IP "" 0
 .P
-\fBvdens vdesl:///dev/ttyAMA0\fR
-.P
-Run the following command on both hosts to create a virtual interface named \fBvdesl0\fR on each end\. The two interfaces are conencted by a 4Mbaud link\.
-.P
-\fBsudo vde_plug \-d tap://vdesl0 vdesl:///dev/ttyAMA0[speed=4000000]\fR
+Run the following command on both hosts to create a virtual interface named \fBvdesl0\fR on each end\. The two interfaces are connected by a 4Mbaud link\.
+.IP "" 4
+.nf
+sudo vde_plug \-d tap://vdesl0 vdesl:///dev/ttyAMA0[speed=4000000]
+.fi
+.IP "" 0
 .SH "NOTICE"
 Virtual Distributed Ethernet is not related in any way with www\.vde\.com ("Verband der Elektrotechnik, Elektronik und Informationstechnik" i\.e\. the German "Association for Electrical, Electronic & Information Technologies")\.
 .SH "SEE ALSO"
