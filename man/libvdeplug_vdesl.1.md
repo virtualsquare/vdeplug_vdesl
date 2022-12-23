@@ -1,6 +1,3 @@
-libvdeplug_vdesl(1) -- vdesl vdeplug module: ethernet over serial link
-====
-
 <!--
 .\" Copyright (C) 2020 VirtualSquare. Project Leader: Renzo Davoli
 .\"
@@ -25,11 +22,14 @@ libvdeplug_vdesl(1) -- vdesl vdeplug module: ethernet over serial link
 .\" MA 02110-1301 USA.
 .\"
 -->
+# NAME
 
-## SYNOPSIS
+`libvdeplug_vdesl` -- vdesl vdeplug module: ethernet over serial link
+
+# SYNOPSIS
 libvdeplug_vdesl.so
 
-## DESCRIPTION
+# DESCRIPTION
 
 This libvdeplug module creates point-to-point virtual ethernet networks over
 serial links.
@@ -41,18 +41,18 @@ The vde_plug_url syntax of this module is the following:
 
   `vdesl://`*device_path* [ `[` OPTION [ /OPTION]...`]` ]
 
-## OPTIONS
+# OPTIONS
 
-  * `speed`=_baudrate_:
-    Set the baud rate of the serial link. This plugin supports the following baud rates:
-    9600, 19200, 38400, 57600, 115200, 230400, 460800, 500000, 576000, 921600, 1000000,
-    1152000, 1500000, 2000000, 2500000, 3000000, 3500000, 4000000.
-    High baud rates may not be supported by the uart hardware or could provide an unreliable service
-    due to communication errors. In order to achieve high speeds the cables should be short and
-    properly shielded from electro-magnetic noise.
+  `speed`=_baudrate_
+: Set the baud rate of the serial link. This plugin supports the following baud rates:
+: 9600, 19200, 38400, 57600, 115200, 230400, 460800, 500000, 576000, 921600, 1000000,
+: 1152000, 1500000, 2000000, 2500000, 3000000, 3500000, 4000000.
+: High baud rates may not be supported by the uart hardware or could provide an unreliable service
+: due to communication errors. In order to achieve high speeds the cables should be short and
+: properly shielded from electro-magnetic noise.
 
 
-## EXAMPLES
+# EXAMPLES
 
 Scenario: two hosts connected by a serial line. e.g.: RS-232 serial ports connected by a null modem cable,
 USB-ttl cables or USB-FTDI boards or UART pins of System-on-Chip point-to-point connected so that the
@@ -76,16 +76,13 @@ interfaces are connected by a 4Mbaud link.
 sudo vde_plug -d tap://vdesl0 vdesl:///dev/ttyAMA0[speed=4000000]
 ```
 
-## NOTICE
+# NOTICE
 
 Virtual  Distributed  Ethernet  is not related in any way with www.vde.com ("Verband der Elektrotechnik, Elektronik
 und Informationstechnik" i.e. the German "Association for Electrical, Electronic & Information Technologies").
 
-## SEE ALSO
+# SEE ALSO
 `vde_plug`(1), `vdens`(1)
 
-## AUTHOR
+# AUTHOR
 VirtualSquare. Project leader: Renzo Davoli
-
-	
-
