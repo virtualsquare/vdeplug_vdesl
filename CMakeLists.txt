@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.25)
 project("vdeplug_vdesl"
     DESCRIPTION "libvdeplug plugin module for vdesl"
     HOMEPAGE_URL "https://github.com/virtualsquare/vdeplug_vdesl"
